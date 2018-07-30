@@ -60,3 +60,9 @@ target/
 \.idea/
 
 \.DS_Store
+
+pkg_autograd/\.ipynb_checkpoints/
+
+pkg_amogape/\.ipynb_checkpoints/
+
+\.ipynb_checkpoints/

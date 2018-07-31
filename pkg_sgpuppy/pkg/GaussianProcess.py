@@ -42,7 +42,7 @@ class GaussianProcess(object):
 
 
 	@staticmethod
-	def get_realisation(x, cov, theta):
+	def get_realisation(x, cov, theta, random_state=None):
 		"""
 		Generates a realisation of a gaussian process with the given parameters for the covariance function.
 
@@ -54,7 +54,7 @@ class GaussianProcess(object):
 		n,d = np.shape(x)
 		K = cov.cov_matrix(x,theta)
 		mean = np.zeros(n)
-		return np.random.multivariate_normal(mean, K)
+		return np.random.RandomState(seed=random_state).multivariate_normal(mean, K)
 
 	def __call__(self, x_star):
 		"""
@@ -102,7 +102,6 @@ class GaussianProcess(object):
 		#TODO Optimize for the SPGP covariance function
 		vt = self._get_vt()
 		Kinv = self.Kinv
-
 		x_star = np.array(x_star)
 		k = self.cov(x_star, x_star, self.theta_min) #+ vt  #code variance + aleatory variance
 		kv = self.cov.cov_matrix_ij(np.atleast_2d(x_star),self.x,self.theta_min) #np.array([self.covariance(x_star, self.x[i], v, w) for i in range(len(self.x))])
